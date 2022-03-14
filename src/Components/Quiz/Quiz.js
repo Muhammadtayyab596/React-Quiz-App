@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import "./Quiz.css"
 
@@ -44,19 +44,38 @@ function Quiz() {
 
     ]
 
-    var history = useHistory();
+    // var history = useHistory();
 
     const [counter, setcounter] = useState(0)
     const [userAnswer, setuserAnswer] = useState("")
     const [score, setscore] = useState(0)
 
+    const [checked, setChecked] = useState({
+        option1: false,
+        option2: false,
+        option3: false,
+        option4: false,
+    });
+
+
 
     const next = () => {
 
 
+        
+        setChecked({
+            option1: false,
+            option2: false,
+            option3: false,
+            option4: false,
+        })
+        
+        
         setcounter(counter + 1)
 
-        if (userAnswer == arry[counter].answerKey) {
+
+
+        if (userAnswer === arry[counter].answerKey) {
             setscore(score + 10);
             console.log(score);
         } else {
@@ -66,59 +85,86 @@ function Quiz() {
 
     }
 
-    const submit =()=>{
-        if (userAnswer == arry[counter].answerKey) {
+    const submit = () => {
+        if (userAnswer === arry[counter].answerKey) {
             setscore(score + 10);
-            
+
         } else {
             console.log("Wrong Answer");
         }
-        
+
 
     }
 
+
+
+
     const optionValue = (e) => {
+
         setuserAnswer(e.target.value)
+        console.log(e.target.value);
+        setChecked(
+            {
+                option1: false,
+                option2: false,
+                option3: false,
+                option4: false,
+                [e.target.value]: true
+            }
+        );
+
 
     }
 
     return (
         <div>
-            <div class="wrapper">
-                <div class="quiz">
-                    <div class="quiz_header">
-                        <div class="quiz_user">
-                            <h4>Welcome! <span class="name"></span></h4>
+            <div className="wrapper">
+                <div className="quiz">
+                    <div className="quiz_header">
+                        <div className="quiz_user">
+                            <h4>Welcome! <span className="name"></span></h4>
                         </div>
-                        <div class="quiz_timer">
-                            <span class="time">00:00</span>
+                        <div className="quiz_timer">
+                            <span className="time">00:00</span>
                         </div>
                     </div>
-                    <div class="quiz_body">
+                    <div className="quiz_body">
                         <div>
                             <h5>{arry[counter].Question}</h5>
 
-                            <ul class="option_group">
+                            <ul className="option_group">
+                                {/* {
+                                    arry[counter].option.map((item, index) => {
+                                        return (
+                                            <li className="option" key={index}>
+                                                <input onChange={optionValue} checked={checked.item} value={item} type="radio" name="quiz" /><label>{item}</label>
+                                            </li>
+                                        )
+                                    })
+                                } */}
 
-                                <li class="option">
-                                    <input onChange={optionValue} value={arry[counter].option[0]} type="radio" name="quiz" /><label>{arry[counter].option[0]}</label>
+                                <li className="option">
+                                    <input onChange={optionValue} checked={checked.option1} value={arry[counter].option[1]} type="radio" name="quiz" /><label>{arry[counter].option[0]}</label>
                                 </li>
-                                <li class="option">
-                                    <input onChange={optionValue} value={arry[counter].option[1]} type="radio" name="quiz" /><label>{arry[counter].option[1]}</label>
+
+                                <li className="option">
+                                    <input onChange={optionValue} checked={checked.option2} value={arry[counter].option[1]} type="radio" name="quiz" /><label>{arry[counter].option[1]}</label>
                                 </li>
-                                <li class="option">
-                                    <input onChange={optionValue} value={arry[counter].option[2]} type="radio" name="quiz" /><label>{arry[counter].option[2]}</label>
+
+                                <li className="option">
+                                    <input onChange={optionValue} checked={checked.option3} value={arry[counter].option[2]} type="radio" name="quiz" /><label>{arry[counter].option[2]}</label>
                                 </li>
-                                <li class="option">
-                                    <input onChange={optionValue} value={arry[counter].option[3]} type="radio" name="quiz" /><label>{arry[counter].option[3]}</label>
+
+                                <li className="option">
+                                    <input onChange={optionValue} checked={checked.option4} value={arry[counter].option[3]} type="radio" name="quiz" /><label>{arry[counter].option[3]}</label>
                                 </li>
 
                             </ul>
                         </div>
                         {
-                            counter == 4 ? <button onClick={submit} class="btn-next">Submit</button>
+                            counter === 4 ? <button onClick={submit} className="btn-next">Submit</button>
                                 :
-                                <button onClick={next} class="btn-next">Next Question</button>
+                                <button onClick={next} className="btn-next">Next Question</button>
                         }
 
                     </div>
