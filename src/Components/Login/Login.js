@@ -26,7 +26,7 @@ function Login() {
 
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                // Signed in
+                
                 var user = userCredential.user;
 
                 swal({
@@ -35,7 +35,7 @@ function Login() {
                     icon: "success",
                     button: "next",
                 });
-                // ...
+                
             }).then((value)=>{
                 history.push("/quiz")
                 
